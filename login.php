@@ -16,10 +16,30 @@
     <!--Custom styles-->
     <link rel="stylesheet" type="text/css" href="css/login.css">
 </head>
+<?php
+require_once('C:/xampp/htdocs/shoplaptop/db.php');
+require_once('./models/users.php');
+session_start();
+$_SESSION['user_login'] = '';
+$_SESSION['user_id'] = '';
+if (isset($_POST['login'])) {
+    $users = new Users();
+    $user = $users->checkLogin($_POST);
+    if ($user != null) {
+        $_SESSION['user_login'] = $user['username'];
+        $_SESSION['user_id'] = $user['id'];
+        header("Location:index.php");
+        // var_dump($_SESSION);
+    } else {
+        //var_dump($_SESSION);
+        $alert = 'Sai ten dang  nhap hoac mat khau  sai !';
+    }
+}
+?>
 
 <body>
     <div class="container">
-        
+        <?php if (isset($alert)) echo '<div class="alert alert-primary" role="alert">' . " $alert " . "</div>"; ?>
         <div class="d-flex justify-content-center h-100">
             <div class="card">
                 <div class="card-header">
