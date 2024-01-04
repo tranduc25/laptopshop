@@ -1,7 +1,7 @@
 <?php
 require_once('C:/xampp/htdocs/shoplaptop/db.php');
 require_once('imodel.php');
-class Users extends DB 
+class Users extends DB implements IModel
 {
     const tableName = 'user';
     public function __construct()
@@ -87,7 +87,42 @@ class Users extends DB
         $this->db->query("DELETE FROM " . self::tableName . " WHERE id = " . $id);
     }
 
-    
+    function update($payload)//for admin
+    {
+        // $stm = $this->db->prepare('UPDATE ' . self::tableName . ' 
+        //     SET address = :address, phone = :phone WHERE id = :id');
+        //     $stm->execute(array(':address' => $address, ':phone' => $phone, ':id' => $id));
+        try {
+            $id = $payload['id'];
+            $username = $payload['username'];
+            $address = $payload['address'];
+            $phone = $payload['phone'];
+            $city = $payload['city'];
+            $password = $payload['password'];
+            $full_name = $payload['full_name'];
+            $dob = $payload['dob'];
+            $email = $payload['email'];
+            $stm = $this->db->prepare('UPDATE  ' .
+                self::tableName .
+                ' SET username=:username,address=:address,phone=:phone
+                ,password=:password,email=:email,city=:city,full_name=:full_name,dob=:dob WHERE id = :id');
+            $stm->execute(array(
+                ':username' => $username,
+                ':address' => $address,
+                ':phone' => $phone,
+                ':email' => $email,
+                ':password' => md5($password),
+                ':city' => $city,
+                ':full_name' => $full_name,
+                ':dob' => $dob,
+                ':id' => $id
+            ));
+        } catch (\Throwable $th) {
+            echo $th->getMessage();
+        }
+
+        return $stm->rowCount();
+    }
 
     function updateUser($payload)//for user update
     {
@@ -121,13 +156,12 @@ class Users extends DB
 
         return $stm->rowCount();
     }
-
     public function login($payload)
     {
     }
     public function register($payload)
     {
-        # code...
+
     }
     function getById($id)
     {
