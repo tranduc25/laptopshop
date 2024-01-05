@@ -10,7 +10,7 @@ function generatePage($pdo, $tableName, $count)
     foreach ($row as $r) {
         $allRows = $r['count'];
     }
-    $page = ceil($allRows / $count); //11/5 = 2.2 xấp xỉ 3 -> 2 trang
+    $page = ceil($allRows / $count); 
     for ($i = 0; $i < $page; $i++) {
         $pageCount = $i + 1;
         if (isset($_GET['page']) && $_GET['page'] == $pageCount) {
