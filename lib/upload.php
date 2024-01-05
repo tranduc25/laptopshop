@@ -44,7 +44,7 @@ class upload
         return $realPath;
     }
 
-    public function uploadImgOfContent($n) //n la so anh cam upload
+    public function uploadImgOfContent($n) //n la so anh can upload
     {
         $src = array();
         for ($i = 1; $i <= $n; $i++) {

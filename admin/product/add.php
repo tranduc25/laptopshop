@@ -25,9 +25,7 @@ if (isset($_FILES['files']) && isset($_POST['submit'])) {
     }
 }
 
-// get brand  and cate to show on select
-$brand = new Brand();
-$listbrand =  $brand->getAllNoLimit();
+
 $cate = new Cate();
 $listcate = $cate->getAllnoLimit();
 ?>
@@ -63,17 +61,6 @@ $listcate = $cate->getAllnoLimit();
                 </div>
             </div>
 
-            <div class="form-group row">
-                <label for="staticEmail" class="col-sm-2 col-form-label">Thương Hiệu</label>
-                <div class="col-sm-10">
-                    <select name="brand_id">
-                        <?php foreach ($listbrand as $r) {
-                        ?>
-                            <option value="<?php echo $r['id']  ?>"><?php echo $r['name'] ?></option>
-                        <?php } ?>
-                    </select>
-                </div>
-            </div>
 
             <div class="form-group row">
                 <label for="staticEmail" class="col-sm-2 col-form-label">The Loai</label>
