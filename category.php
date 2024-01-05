@@ -10,6 +10,14 @@ $cateslist = $cates->getAllnoLimit();
 $listProducts = array();
 $cate_ids = array();
 
+//get  list  products by category
+if (isset($_POST['cate_id'])) {
+    $cate_ids = $_POST['cate_id'];
+    // var_dump($cate_ids);
+    $listProducts = $products->getListProductByCategorys($cate_ids, '');
+    // var_dump($list);
+}
+
 function prinCheckCate($category, $cate_ids)
 {   //neu  co id category_id trong danh  sach cate_Ids lay  ve tu POST in laf  checked
     foreach ($cate_ids as $cate_id) {
