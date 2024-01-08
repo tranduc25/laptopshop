@@ -90,7 +90,7 @@ if (isset($_POST['submit'])) {
                         <option value="0">Chon the loai</option>
                         <?php foreach ($listcate as $cate) {
                         ?>
-                            <option <?php if ($cate['id'] == $catesOfProduct[0]['cate_id']) echo 'selected'; ?> value="<?php echo $cate['id'];  ?>"><?php echo $cate['name'] ?></option>
+                            <option <?php if (!empty($catesOfProduct) && isset($catesOfProduct[0]['cate_id']) && $cate['id'] == $catesOfProduct[0]['cate_id']) echo 'selected'; ?> value="<?php echo $cate['id'];  ?>"><?php echo $cate['name'] ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -102,7 +102,19 @@ if (isset($_POST['submit'])) {
                         <option value="0">Chon the loai</option>
                         <?php foreach ($listcate as $cate) {
                         ?>
-                            <option <?php if ($cate['id'] == $catesOfProduct[1]['cate_id']) echo 'selected'; ?> value="<?php echo $cate['id'];  ?>"><?php echo $cate['name'] ?></option>
+                            <?php
+                                // Kiểm tra xem $catesOfProduct có ít nhất hai phần tử và phần tử thứ hai có chứa 'cate_id' không
+                                if (isset($catesOfProduct[1]) && isset($catesOfProduct[1]['cate_id'])) {
+                                    if ($cate['id'] == $catesOfProduct[1]['cate_id']) {
+                                        echo '<option selected value="' . $cate['id'] . '">' . $cate['name'] . '</option>';
+                                    } else {
+                                        echo '<option value="' . $cate['id'] . '">' . $cate['name'] . '</option>';
+                                    }
+                                } else {
+                                    echo '<option value="' . $cate['id'] . '">' . $cate['name'] . '</option>';
+                                }
+                                ?>
+
                         <?php } ?>
                     </select>
                 </div>
@@ -114,7 +126,18 @@ if (isset($_POST['submit'])) {
                         <option value="0">Chon the loai</option>
                         <?php foreach ($listcate as $cate) {
                         ?>
-                            <option <?php if ($cate['id'] ==  $catesOfProduct[2]['cate_id']) echo 'selected'; ?> value="<?php echo $cate['id'];  ?>"><?php echo $cate['name'] ?></option>
+                            <?php
+                                // Kiểm tra xem $catesOfProduct có ít nhất ba phần tử và phần tử thứ ba có chứa 'cate_id' không
+                                if (isset($catesOfProduct[2]) && isset($catesOfProduct[2]['cate_id'])) {
+                                    if ($cate['id'] == $catesOfProduct[2]['cate_id']) {
+                                        echo '<option selected value="' . $cate['id'] . '">' . $cate['name'] . '</option>';
+                                    } else {
+                                        echo '<option value="' . $cate['id'] . '">' . $cate['name'] . '</option>';
+                                    }
+                                } else {
+                                    echo '<option value="' . $cate['id'] . '">' . $cate['name'] . '</option>';
+                                }
+                                ?>
                         <?php } ?>
                     </select>
                 </div>

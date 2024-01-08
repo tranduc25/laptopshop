@@ -11,9 +11,8 @@ if (isset($_GET['product_id'])) {
     //show categorys of product
     $cate = new Cate();
     $cates = $cate->getCatesByProductId($productSingle['id']);
-} else {
-    //header('Location:http://localhost/shoplaptop');
-}
+    
+} 
 
 
 //add product to cart by POST method

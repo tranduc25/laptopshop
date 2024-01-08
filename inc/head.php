@@ -10,7 +10,7 @@ $_SESSION['title'] = 'Shop Laptop';
 $actual_link = $_SERVER['PHP_SELF'];
 switch ($actual_link) {
   case '/localhost/shoplaptop/index.php':
-    $_SESSION['title'] = 'Shop Laptop ';
+    $_SESSION['title'] = 'Shop Laptop';
     break;
   case '/shoplaptop/shop.php':
     $_SESSION['title'] = 'Tất cả Sản Phẩm';

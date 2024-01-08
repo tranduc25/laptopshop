@@ -15,7 +15,22 @@ if (isset($_GET['cate']) && is_numeric($_GET['cate'])) {
     $cate = $cates->getCateById($id);
     $list = $products->getListProductByCategory($id);
 }
+// $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// try {
+//     if (isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 0) {
+//         $page = $_GET['page'];
+//     } else {
+//         $page = 1;
+//     }
+//     $count = 10;
+//     $offset = ($page - 1) * $count;
+//   
+// } catch (PDOException $e) {
+//     echo $e->getMessage();
+// }
+// // 
 
+//
 ?>
 <div class="product-big-title-area">
     <div class="container">
@@ -58,10 +73,10 @@ if (isset($_GET['cate']) && is_numeric($_GET['cate'])) {
 
         <!-- <div class="row">
             <?php
-             
+            //lau so bnả ghi 
             $cate_id = $_GET['cate'];
             
-            $pageTotal = ceil($allRows / $count); 
+            $pageTotal = ceil($allRows / $count); //11/5 = 2.2 xấp xỉ 3 -> 2 trang
 
             ?>
             <div class="col-m d-12">
