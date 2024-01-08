@@ -4,8 +4,8 @@ include_once("inc/top.php");
 ?>
 
 <?php
-// hien trên trang nay
-// lay so trang de phan trang
+// hient trên tràng này
+// lay so trang der phan trang
 $products = new Product();
 $pdo = new DB();
 $pdo = $pdo->getPDO();
@@ -56,9 +56,9 @@ if (isset($_GET['cate']) && is_numeric($_GET['cate'])) {
             <?php  } ?>
         </div>
 
-        <div class="row">
+        <!-- <div class="row">
             <?php
-            //lay so ban ghi 
+             
             $cate_id = $_GET['cate'];
             
             $pageTotal = ceil($allRows / $count); 
@@ -89,7 +89,7 @@ if (isset($_GET['cate']) && is_numeric($_GET['cate'])) {
                     </nav>
                 </div>
             </div>
-        </div> 
+        </div> -->
     </div>
 </div>
 

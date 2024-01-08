@@ -161,7 +161,7 @@ class Users extends DB implements IModel
     }
     public function register($payload)
     {
-
+        # code...
     }
     function getById($id)
     {

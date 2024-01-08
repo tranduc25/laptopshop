@@ -37,6 +37,9 @@ if (isset($_GET['search_key']) && !empty($_GET['search_key'])) {
 }
 ?>
 
+
+
+
 <div class="single-product-area">
     <div class="zigzag-bottom"></div>
     <div class="container">
@@ -60,7 +63,7 @@ if (isset($_GET['search_key']) && !empty($_GET['search_key'])) {
                             <del><?php if ($sellprice != $product['price']) echo number_format($product['price']) . ' VND' ?></del>
                         </div>
                         <div class="product-option-shop">
-                            <a class="add_to_cart_button" data-quantity="1" rel=" nofollow" href="?add-to-cart=<?php echo $product['id'] ?>">Thêm vào giỏ</a>
+                            <a class="add_to_cart_button" data-quantity="1"" rel=" nofollow" href="?add-to-cart=<?php echo $product['id'] ?>">Thêm vào giỏ</a>
                         </div>
                     </div>
                 </div>
@@ -69,7 +72,7 @@ if (isset($_GET['search_key']) && !empty($_GET['search_key'])) {
 
         </div>
         <!-- hien danh sach trang  -->
-        <div class="row">
+        <!-- <div class="row">
             <?php
             $row = $pdo->query('select count(*) as count from product');
             foreach ($row as $r) {
@@ -103,7 +106,7 @@ if (isset($_GET['search_key']) && !empty($_GET['search_key'])) {
                     </nav>
                 </div>
             </div>
-        </div> 
+        </div> -->
     </div>
 </div>
 

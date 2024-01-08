@@ -210,7 +210,7 @@ if (isset($_POST['update_cart'])) {
 
                             <form method="post" action="" class="shipping_calculator">
                                 <h2>
-                                    <a class="shipping-calculator-button" data-toggle="collapse" href="" aria-expanded=" false" aria-controls="calcalute-shipping-wrap ">Tính phí ship</a></h2>
+                                    <a class="shipping-calculator-button" data-toggle="collapse" href=""" aria-expanded=" false" aria-controls="calcalute-shipping-wrap ">Tính phí ship</a></h2>
 
                                 <select rel="calc_shipping_state" class="country_to_state" id="calc_shipping_countr" name="calc_shipping_country ">
                                     <option value=" ">Chọn thành phố...</option>

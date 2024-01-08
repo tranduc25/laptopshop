@@ -3,6 +3,7 @@ include_once("inc/head.php");
 include_once("inc/top.php");
 ?>
 <?php
+// include_once('inc/filter.php');
 $products = new Product();
 $cates = new Cate();
 //get  list  category
@@ -11,6 +12,7 @@ $listProducts = array();
 $cate_ids = array();
 
 //get  list  products by category
+
 if (isset($_POST['cate_id'])) {
     $cate_ids = $_POST['cate_id'];
     // var_dump($cate_ids);

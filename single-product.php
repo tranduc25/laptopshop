@@ -8,22 +8,21 @@ $product = new Product();
 if (isset($_GET['product_id'])) {
     $id = $_GET['product_id'];
     $productSingle = $product->getProductById($id);
-    if ($productSingle) {
-        //show categories of product
-        $cate = new Cate();
-        $cates = $cate->getCatesByProductId($productSingle['id']);
-    }
+    //show categorys of product
+    $cate = new Cate();
+    $cates = $cate->getCatesByProductId($productSingle['id']);
 } else {
-    // header('Location:http://localhost/laptop');
+    //header('Location:http://localhost/shoplaptop');
 }
+
 
 //add product to cart by POST method
 if (isset($_POST['add-to-cart']) && $_POST['add-to-cart'] > 0) {
     $id = $_POST['add-to-cart'];
-      var_dump($_POST);
+    //   var_dump($_POST);
     $quantity = $_POST['quantity'];
     $productInCart = $product->getProductById($id);
-     var_dump($productInCart);
+    //  var_dump($productInCart);
     $price = $productInCart['price'];
     $name = $productInCart['name'];
     if (isset($_SESSION['cart'])) {
@@ -85,17 +84,11 @@ if (isset($_POST['add-to-cart']) && $_POST['add-to-cart'] > 0) {
                 <div class="product-content-right">
                     <div class="product-breadcroumb">
                         <a href="index.php">Home</a>
-                        <?php 
-                        if(isset($cates)) {
-                            foreach ($cates as $category) { ?>
+                        <?php foreach ($cates as $category) { ?>
                                 <a href="productByCategory.php?cate=<?php echo $category['id']; ?>"><?php echo $category['name']; ?></a> 
-                                <?php }
-                        } ?>
+                        <?php } ?>
                     </div>
-                    <?php 
-                    if (isset($productSingle)) {
-                        $listImg = $product->getImg($productSingle['id']);
-                    }
+                    <?php $listImg = $product->getImg($productSingle['id']);
                     ?>
 
                     <div class="row">
@@ -125,23 +118,12 @@ if (isset($_POST['add-to-cart']) && $_POST['add-to-cart'] > 0) {
 
                         <div class="col-sm-12">
                             <div class="product-inner">
-                                <h2 class="product-name"> 
-                                    <?php if (isset($productSingle)) {
-                                            echo $productSingle['name'] ;
-                                        } ?> 
-                                </h2>
+                                <h2 class="product-name"><?php echo $productSingle['name'] ?></h2>
                                 <div class="product-inner-price">
                                     <!-- <ins><?php echo number_format($productSingle['price']) . ' VND' ?></ins> -->
-                                    <ins><?php
-                                        if (isset($productSingle)) {
-                                            $sellprice = $productSingle['price'] * (100 - $productSingle['discount']) / 100;
-                                            echo number_format($sellprice) . ' VND';
-                                        } 
-                                        ?></ins>
-                                    <del><?php 
-                                    if (isset($productSingle)) {
-                                        if ($sellprice != $productSingle['price']) echo number_format($productSingle['price']) . ' VND';
-                                    } ?></del>
+                                    <ins><?php $sellprice = $productSingle['price'] * (100 - $productSingle['discount']) / 100;
+                                            echo number_format($sellprice) . ' VND' ?></ins>
+                                    <del><?php if ($sellprice != $productSingle['price']) echo number_format($productSingle['price']) . ' VND' ?></del>
                                     <!-- <del>$100.00</del> -->
                                 </div>
                                 <!-- form post to cart  -->
@@ -154,8 +136,7 @@ if (isset($_POST['add-to-cart']) && $_POST['add-to-cart'] > 0) {
 
                                 <div class="product-inner-category">
                                     <!-- <p>Category: <a href=""><?php  ?></a>. -->
-                                    Keyword: <a href="search.php?search_key=<?php 
-                                    if (isset($productSingle)) echo $productSingle['keyword'] ?> "><?php if (isset($productSingle)) echo $productSingle['keyword'] ?></a>
+                                    Keyword: <a href="search.php?search_key=<?php echo $productSingle['keyword'] ?> "><?php echo $productSingle['keyword'] ?></a>
                                 </div>
 
                                 <div role="tabpanel">
@@ -165,12 +146,10 @@ if (isset($_POST['add-to-cart']) && $_POST['add-to-cart'] > 0) {
                                     </ul>
                                     <div class="tab-content">
                                         <div role="tabpanel" class="tab-pane fade in active" id="home">
-                                            <h2><?php if ($productSingle !== null && isset($productSingle['id'])) {
-                                                    echo $productSingle['short_desc'] ;
-                                                }?></h2>
+                                            <h2><?php echo $productSingle['short_desc'] ?></h2>
                                             <h2><b>Đặc Điểm Nổi Bật</b></h2>
                                             <hr>
-                                            <?php // lay noi dung chi tiet ve lap top theo id san pham
+                                            <?php // layu noi dung chi tiet ve lap top theo id san pham
                                             $contents = $product->getContentProduct($id);
                                             foreach ($contents as  $r) { ?>
                                                 <h3><?php echo $r['title'] ?></h3>
@@ -250,7 +229,7 @@ if (isset($_POST['add-to-cart']) && $_POST['add-to-cart'] > 0) {
 
                             </div>
                         </div>
-                    </div> 
+                    </div>
 
                     <?php
                     include_once("inc/related.php")

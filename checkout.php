@@ -95,7 +95,7 @@ if (isset($_POST['order']) && $cart != NULL) {
                                     </div>
                                 </div>
 
-                                <div class="col-2">
+                                <!-- <div class="col-2">
                                     <div class="woocommerce-shipping-fields">
                                         <h3 id="ship-to-different-address">
                                             <label class="checkbox" for="ship-to-different-address-checkbox">Gửi tới 1 địa chỉ khác </label>
@@ -143,7 +143,7 @@ if (isset($_POST['order']) && $cart != NULL) {
 
                                     </div>
 
-                                </div>
+                                </div> -->
 
                             </div>
 

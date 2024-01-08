@@ -10,7 +10,7 @@ if (isset($_SESSION['success'])) {
 }
 $result_check = '';
 $users = new Users();
-//kiem tra xem user va mail da ton tai troeng DB hay chua
+//kiem tra xem user va mail da ton tiaj troeng DB hay chua
 $id = $_SESSION['user_id'];
 $user = $users->getByid($id);
 if (isset($_POST['update'])) {

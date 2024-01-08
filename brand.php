@@ -5,7 +5,7 @@ include_once("inc/top.php");
 <?php
 $products = new Product();
 $brands = new Brand();
-//get  list  brand
+
 $brandsList = $brands->getAllnoLimit();
 $list = array();
 //get  list  products by category

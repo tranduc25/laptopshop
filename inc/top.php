@@ -1,4 +1,71 @@
+<?php
+//cart in session
+//unset($_SESSION['cart']);
+if (isset($_GET['add-to-cart'])) {
+    //  var_dump($_GET);
+    $id = $_GET['add-to-cart'];
+    if (isset($_SESSION['cart'])) {
+        $cart = $_SESSION['cart'];
+        $flag = false;
+        //tăng số luợng sp nếu đã có sp này trong giỏ hàng
+        for ($i = 0; $i < count($cart); $i++) {
+            if ($cart[$i]['id'] == $id) {
+                $cart[$i]['quantity'] = $cart[$i]['quantity'] + 1;
+                $flag = true; //da ton tai mot cai san pham có id như vay trong gio hang
+                break;
+            }
+        }
 
+        // thêm mới sp vào giỏ hàng
+        if ($flag == false) {
+            $products = new Product();
+            $product = $products->getProductById($id);
+            $item = array(
+                'id' => $product['id'],
+                'name' => $product['name'],
+                'quantity' => 1,
+                'price' => $product['price']
+            );
+            array_push($cart, $item);
+        }
+        $_SESSION['cart'] = $cart;
+    } else {
+        // đẩy sp vào giỏ hàng
+        $products = new Product();
+        $product = $products->getProductById($id);
+        $item = array(
+            'id' => $product['id'],
+            'name' => $product['name'],
+            'quantity' => 1,
+            'price' => $product['price']
+        );
+        $cart = array($item);
+        $_SESSION['cart'] = $cart;
+    }
+    //  var_dump($_SESSION['cart']);
+}
+// $cart = $_SESSION['cart'];
+if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
+    $cart = $_SESSION['cart'];
+} else {
+    $cart = array(); // Khởi tạo một mảng rỗng nếu chưa tồn tại
+}
+
+$total = 0;
+// foreach ($cart as $item) {
+//     $total += $item['price'] * $item['quantity'];
+// }
+
+// Kiểm tra xem biến $cart có tồn tại và là một mảng không
+if (is_array($cart) || is_object($cart)) {
+    foreach ($cart as $item) {
+        // Xử lý từng phần tử trong $cart
+    }
+} else {
+    // Xử lý khi $cart không phải là mảng hoặc đối tượng
+    echo "Dữ liệu không hợp lệ"; // Hoặc thực hiện các hành động khác
+}
+?>
 
 <body>
     <div class="header-area">
@@ -7,8 +74,17 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><img height="20px" width="20px" src="" alt="">
-                          
+                            <li><a height="20px" width="20px" >
+                            <?php /*echo 'Xin Chào!  ' . $_SESSION['user_login']*/ 
+                                // Kiểm tra xem key 'user_login' có tồn tại trong $_SESSION hay không
+                                if (isset($_SESSION['user_login'])) {
+                                    // Phần tử 'user_login' tồn tại, bạn có thể sử dụng nó an toàn
+                                    echo 'Xin Chào! ' . $_SESSION['user_login'];
+                                } else {
+                                    // Phần tử 'user_login' không tồn tại
+                                    echo 'Xin chào!'; // Hoặc thực hiện hành động khác tương ứng với trường hợp này
+                                }
+                            ?>
                             </li>
                             <li><a href="profileuser.php"><i class="fa fa-user"></i>Tài khoản của tôi </a></li>
 
@@ -30,15 +106,15 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="./"><img src="img/logo.png"></a></h1>
+                        <h1><a href="./"></a></h1>
                     </div>
 
                 </div>
 
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="cart.php">Cart - <span class="cart-amunt"></span>
-                            <i class="fa fa-shopping-cart"></i> <span class="product-count">></span></a>
+                        <a href="cart.php">Cart - <span class="cart-amunt"><?php echo number_format($total) . ' đ'; ?></span>
+                            <i class="fa fa-shopping-cart"></i> <span class="product-count"><?php echo count($cart); ?></span></a>
                     </div>
                 </div>
             </div>
