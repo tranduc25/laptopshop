@@ -88,7 +88,8 @@ if (isset($_POST['reset'])) $_SESSION['condition'] = '';
             </tbody>
         </table>
         <button type="submit" name="filter">Lọc</button>
-        <button type="reset" name="reset">Xoá lọc</button>
+        <button type="reset" name="reset" style="background: none repeat scroll 0 0 #5a88ca; border: medium none; color: #fff; padding: 11px 20px;text-transform: uppercase;">
+                Xoá lọc</button>
         <hr>
     </form>
     <form action="" method="post">

@@ -158,7 +158,7 @@ if (isset($_POST['update_cart'])) {
                         </form>
 
                         <div class="cart-collaterals ">
-                            <div class="cross-sells ">
+                            <!-- <div class="cross-sells ">
                                 <h2>Có thể bạn sẽ thích .</h2>
                                 <ul class="products ">
                                     <li class="product ">
@@ -181,7 +181,7 @@ if (isset($_POST['update_cart'])) {
                                         <a class="add_to_cart_button " data-quantity="1 " data-product_sku=" " data-product_id="22 " rel="nofollow " href="single-product.php ">Select options</a>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> -->
 
 
                             <div class="cart_totals">

@@ -83,12 +83,31 @@ if (isset($_POST['add-to-cart']) && $_POST['add-to-cart'] > 0) {
                 <div class="product-content-right">
                     <div class="product-breadcroumb">
                         <a href="index.php">Home</a>
-                        <?php foreach ($cates as $category) { ?>
-                                <a href="productByCategory.php?cate=<?php echo $category['id']; ?>"><?php echo $category['name']; ?></a> 
-                        <?php } ?>
+                        <?php
+                            // Kiểm tra xem biến $cates có tồn tại và có dữ liệu không trước khi sử dụng
+                            if(isset($cates) && is_array($cates)) {
+                                foreach ($cates as $category) {
+                            ?>
+                                    <a href="productByCategory.php?cate=<?php echo $category['id']; ?>"><?php echo $category['name']; ?></a> 
+                            <?php
+                                }
+                            }
+                            ?>
                     </div>
-                    <?php $listImg = $product->getImg($productSingle['id']);
-                    ?>
+                    <?php
+                            // Kiểm tra xem $productSingle đã được khai báo và có giá trị không trước khi sử dụng
+                            if(isset($productSingle) && is_array($productSingle)) {
+                                // Đảm bảo rằng $productSingle không phải là null trước khi sử dụng
+                                if(isset($productSingle['id'])) {
+                                    $listImg = $product->getImg($productSingle['id']);
+                                    // Tiếp tục xử lý với $listImg nếu cần
+                                } else {
+                                    // Xử lý nếu phần tử 'id' không tồn tại trong $productSingle
+                                }
+                            } else {
+                                // Xử lý nếu $productSingle không tồn tại hoặc không phải là một mảng
+                            }
+                            ?>
 
                     <div class="row">
                         <div class="col-sm-12">
@@ -117,13 +136,42 @@ if (isset($_POST['add-to-cart']) && $_POST['add-to-cart'] > 0) {
 
                         <div class="col-sm-12">
                             <div class="product-inner">
-                                <h2 class="product-name"><?php echo $productSingle['name'] ?></h2>
+                                <h2 class="product-name">
+                                    <?php
+                                    // Kiểm tra xem biến $productSingle đã tồn tại và không phải là null
+                                    if(isset($productSingle) && is_array($productSingle)) {
+                                        // Kiểm tra xem phần tử 'name' có tồn tại trong mảng $productSingle không
+                                        if(array_key_exists('name', $productSingle)) {
+                                            echo $productSingle['name'];
+                                        } else {
+                                            // Xử lý nếu phần tử 'name' không tồn tại trong $productSingle
+                                            echo "Tên sản phẩm không có sẵn";
+                                        }
+                                    } else {
+                                        // Xử lý nếu $productSingle không tồn tại hoặc không phải là một mảng
+                                        echo "Không có dữ liệu sản phẩm";
+                                    }
+                                    ?>
+                                </h2>
                                 <div class="product-inner-price">
-                                    <!-- <ins><?php echo number_format($productSingle['price']) . ' VND' ?></ins> -->
-                                    <ins><?php $sellprice = $productSingle['price'] * (100 - $productSingle['discount']) / 100;
-                                            echo number_format($sellprice) . ' VND' ?></ins>
-                                    <del><?php if ($sellprice != $productSingle['price']) echo number_format($productSingle['price']) . ' VND' ?></del>
-                                    <!-- <del>$100.00</del> -->
+                                <?php
+                                    if(isset($productSingle) && is_array($productSingle)) {
+                                        if(isset($productSingle['price']) && isset($productSingle['discount'])) {
+                                            $sellprice = $productSingle['price'] * (100 - $productSingle['discount']) / 100;
+                                            if(isset($sellprice)) {
+                                                echo '<ins>' . number_format($sellprice) . ' VND' . '</ins>';
+                                                if ($sellprice != $productSingle['price']) {
+                                                    echo '<del>' . number_format($productSingle['price']) . ' VND' . '</del>';
+                                                }
+                                            }
+                                        } else {
+                                            echo "Dữ liệu giá hoặc giảm giá không tồn tại";
+                                        }
+                                    } else {
+                                        echo "Không có dữ liệu sản phẩm";
+                                    }
+                                ?>
+
                                 </div>
                                 <!-- form post to cart  -->
                                 <form action="" method="post" class="cart">
@@ -135,7 +183,20 @@ if (isset($_POST['add-to-cart']) && $_POST['add-to-cart'] > 0) {
 
                                 <div class="product-inner-category">
                                     <!-- <p>Category: <a href=""><?php  ?></a>. -->
-                                    Keyword: <a href="search.php?search_key=<?php echo $productSingle['keyword'] ?> "><?php echo $productSingle['keyword'] ?></a>
+                                    Keyword: <a href="search.php?search_key=<?php
+                                        // Kiểm tra xem biến $productSingle đã tồn tại và không phải là null
+                                        if(isset($productSingle) && is_array($productSingle)) {
+                                            // Kiểm tra xem phần tử 'keyword' có tồn tại trong mảng $productSingle không
+                                            if(array_key_exists('keyword', $productSingle)) {
+                                                echo $productSingle['keyword'];
+                                            } else {
+                                                echo "Không có từ khóa";
+                                            }
+                                        } else {
+                                            echo "Không có dữ liệu sản phẩm";
+                                        }
+                                        ?>
+                                        </a>
                                 </div>
 
                                 <div role="tabpanel">
@@ -145,17 +206,52 @@ if (isset($_POST['add-to-cart']) && $_POST['add-to-cart'] > 0) {
                                     </ul>
                                     <div class="tab-content">
                                         <div role="tabpanel" class="tab-pane fade in active" id="home">
-                                            <h2><?php echo $productSingle['short_desc'] ?></h2>
+                                            <h2>
+                                                <?php
+                                                // Kiểm tra xem biến $productSingle đã tồn tại và không phải là null
+                                                if(isset($productSingle) && is_array($productSingle)) {
+                                                    // Kiểm tra xem phần tử 'short_desc' có tồn tại trong mảng $productSingle không
+                                                    if(array_key_exists('short_desc', $productSingle)) {
+                                                        echo $productSingle['short_desc'];
+                                                    } else {
+                                                        echo "Không có mô tả ngắn";
+                                                    }
+                                                } else {
+                                                    echo "Không có dữ liệu sản phẩm";
+                                                }
+                                                ?>
+                                            </h2>
                                             <h2><b>Đặc Điểm Nổi Bật</b></h2>
                                             <hr>
                                             <?php // layu noi dung chi tiet ve lap top theo id san pham
-                                            $contents = $product->getContentProduct($id);
-                                            foreach ($contents as  $r) { ?>
-                                                <h3><?php echo $r['title'] ?></h3>
-                                                <img height="300px" width="400px" src="<?php echo 'admin/product/uploads/' . $r['img'] ?> " alt="">
-                                                <p><?php echo $r['content'] ?></p>
-                                                <hr>
-                                            <?php } ?>
+                                            // Kiểm tra xem biến $productSingle đã tồn tại và không phải là null
+                                            if(isset($productSingle) && is_array($productSingle)) {
+                                                // Kiểm tra xem phần tử 'short_desc' có tồn tại trong mảng $productSingle không
+                                                if(array_key_exists('short_desc', $productSingle)) {
+                                                    echo $productSingle['short_desc'];
+                                                } else {
+                                                    echo "Không có mô tả ngắn";
+                                                }
+                                            } else {
+                                                echo "Không có dữ liệu sản phẩm";
+                                            }
+
+                                            
+                                            // Kiểm tra xem biến $contents đã được khởi tạo và có chứa dữ liệu hay không
+                                            if(isset($contents) && is_array($contents) && !empty($contents)) {
+                                                foreach ($contents as $r) {
+                                            ?>
+                                                    <h3><?php echo $r['title'] ?></h3>
+                                                    <img height="300px" width="400px" src="<?php echo 'admin/product/uploads/' . $r['img'] ?>" alt="">
+                                                    <p><?php echo $r['content'] ?></p>
+                                                    <hr>
+                                            <?php
+                                                }
+                                            } else {
+                                                echo "Không có nội dung sản phẩm";
+                                            }
+                                            ?>
+                                            
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade" id="profile">
                                             <table class="table table-striped table-inverse table-responsive">
@@ -163,58 +259,234 @@ if (isset($_POST['add-to-cart']) && $_POST['add-to-cart'] > 0) {
                                                 <tbody>
                                                     <tr>
                                                         <td scope="row">Model</td>
-                                                        <td><?php echo $productSingle['model'] ?></td>
+                                                        <td><?php
+                                                                // Kiểm tra xem biến $productSingle đã tồn tại và không phải là null
+                                                                if(isset($productSingle) && is_array($productSingle)) {
+                                                                    // Kiểm tra xem phần tử 'model' có tồn tại trong mảng $productSingle không
+                                                                    if(array_key_exists('model', $productSingle)) {
+                                                                        echo $productSingle['model'];
+                                                                    } else {
+                                                                        echo "Không có thông tin model";
+                                                                    }
+                                                                } else {
+                                                                    echo "Không có dữ liệu sản phẩm";
+                                                                }
+                                                                ?>
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td scope="row">CPU</td>
-                                                        <td><?php echo $productSingle['chip'] ?></td>
+                                                        <td><?php
+                                                                // Kiểm tra xem biến $productSingle đã tồn tại và không phải là null
+                                                                if(isset($productSingle) && is_array($productSingle)) {
+                                                                    // Kiểm tra xem phần tử 'chip' có tồn tại trong mảng $productSingle không
+                                                                    if(array_key_exists('chip', $productSingle)) {
+                                                                        echo $productSingle['chip'];
+                                                                    } else {
+                                                                        echo "Không có thông tin về chip";
+                                                                    }
+                                                                } else {
+                                                                    echo "Không có dữ liệu sản phẩm";
+                                                                }
+                                                                ?>
+                                                                </td>
                                                     </tr>
                                                     <tr>
                                                         <td scope="row">VGA</td>
-                                                        <td><?php echo $productSingle['card'] ?></td>
+                                                        <td><?php
+                                                            // Kiểm tra xem biến $productSingle đã tồn tại và không phải là null
+                                                            if(isset($productSingle) && is_array($productSingle)) {
+                                                                // Kiểm tra xem phần tử 'card' có tồn tại trong mảng $productSingle không
+                                                                if(array_key_exists('card', $productSingle)) {
+                                                                    echo $productSingle['card'];
+                                                                } else {
+                                                                    echo "Không có thông tin về card";
+                                                                }
+                                                            } else {
+                                                                echo "Không có dữ liệu sản phẩm";
+                                                            }
+                                                            ?>
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td scope="row">Tình trạng máy</td>
-                                                        <td><?php if ($productSingle['status'] == 0) echo 'Máy mới';
-                                                            else echo 'Máy cũ' ?></td>
+                                                        <td><?php
+                                                            // Kiểm tra xem biến $productSingle đã tồn tại và không phải là null
+                                                            if(isset($productSingle) && is_array($productSingle)) {
+                                                                // Kiểm tra xem phần tử 'status' có tồn tại trong mảng $productSingle không
+                                                                if(array_key_exists('status', $productSingle)) {
+                                                                    if ($productSingle['status'] == 0) {
+                                                                        echo 'Máy mới';
+                                                                    } else {
+                                                                        echo 'Máy cũ';
+                                                                    }
+                                                                } else {
+                                                                    echo "Không có thông tin trạng thái";
+                                                                }
+                                                            } else {
+                                                                echo "Không có dữ liệu sản phẩm";
+                                                            }
+                                                            ?>
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td scope="row">RAM</td>
-                                                        <td><?php echo $productSingle['ram'] ?></td>
+                                                        <td><?php
+                                                            // Kiểm tra xem biến $productSingle đã tồn tại và không phải là null
+                                                            if(isset($productSingle) && is_array($productSingle)) {
+                                                                // Kiểm tra xem phần tử 'ram' có tồn tại trong mảng $productSingle không
+                                                                if(array_key_exists('ram', $productSingle)) {
+                                                                    echo $productSingle['ram'];
+                                                                } else {
+                                                                    echo "Không có thông tin về RAM";
+                                                                }
+                                                            } else {
+                                                                echo "Không có dữ liệu sản phẩm";
+                                                            }
+                                                            ?>
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td scope="row">Ổ đĩa</td>
-                                                        <td><?php echo $productSingle['drive'] ?></td>
+                                                        <td><?php
+                                                            // Kiểm tra xem biến $productSingle đã tồn tại và không phải là null
+                                                            if(isset($productSingle) && is_array($productSingle)) {
+                                                                // Kiểm tra xem phần tử 'drive' có tồn tại trong mảng $productSingle không
+                                                                if(array_key_exists('drive', $productSingle)) {
+                                                                    echo $productSingle['drive'];
+                                                                } else {
+                                                                    echo "Không có thông tin về ổ đĩa";
+                                                                }
+                                                            } else {
+                                                                echo "Không có dữ liệu sản phẩm";
+                                                            }
+                                                            ?>
+                                                        </td>
                                                     </tr>
 
                                                     <tr>
                                                         <td scope="row">Màn hình</td>
-                                                        <td><?php echo $productSingle['display'] ?></td>
+                                                        <td><?php
+                                                            // Kiểm tra xem biến $productSingle đã tồn tại và không phải là null
+                                                            if(isset($productSingle) && is_array($productSingle)) {
+                                                                // Kiểm tra xem phần tử 'display' có tồn tại trong mảng $productSingle không
+                                                                if(array_key_exists('display', $productSingle)) {
+                                                                    echo $productSingle['display'];
+                                                                } else {
+                                                                    echo "Không có thông tin về màn hình hiển thị";
+                                                                }
+                                                            } else {
+                                                                echo "Không có dữ liệu sản phẩm";
+                                                            }
+                                                            ?>
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td scope="row">Kết nối</td>
-                                                        <td><?php echo $productSingle['connect'] ?></td>
+                                                        <td><?php
+                                                            // Kiểm tra xem biến $productSingle đã tồn tại và không phải là null
+                                                            if(isset($productSingle) && is_array($productSingle)) {
+                                                                // Kiểm tra xem phần tử 'connect' có tồn tại trong mảng $productSingle không
+                                                                if(array_key_exists('connect', $productSingle)) {
+                                                                    echo $productSingle['connect'];
+                                                                } else {
+                                                                    echo "Không có thông tin về kết nối";
+                                                                }
+                                                            } else {
+                                                                echo "Không có dữ liệu sản phẩm";
+                                                            }
+                                                            ?>
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td scope="row">Vân tay</td>
-                                                        <td><?php if ($productSingle['vantay'] == 0) echo 'Có';
-                                                            else echo 'Không' ?></td>
+                                                        <td><?php
+                                                            // Kiểm tra xem biến $productSingle đã tồn tại và không phải là null
+                                                            if(isset($productSingle) && is_array($productSingle)) {
+                                                                // Kiểm tra xem phần tử 'vantay' có tồn tại trong mảng $productSingle không
+                                                                if(array_key_exists('vantay', $productSingle)) {
+                                                                    if ($productSingle['vantay'] == 0) {
+                                                                        echo 'Có';
+                                                                    } else {
+                                                                        echo 'Không';
+                                                                    }
+                                                                } else {
+                                                                    echo "Không có thông tin vân tay";
+                                                                }
+                                                            } else {
+                                                                echo "Không có dữ liệu sản phẩm";
+                                                            }
+                                                            ?>
+                                                            </td>
                                                     </tr>
                                                     <tr>
                                                         <td scope="row">HDH</td>
-                                                        <td><?php echo $productSingle['operation'] ?></td>
+                                                        <td><?php
+                                                            // Kiểm tra xem biến $productSingle đã tồn tại và không phải là null
+                                                            if(isset($productSingle) && is_array($productSingle)) {
+                                                                // Kiểm tra xem phần tử 'operation' có tồn tại trong mảng $productSingle không
+                                                                if(array_key_exists('operation', $productSingle)) {
+                                                                    echo $productSingle['operation'];
+                                                                } else {
+                                                                    echo "Không có thông tin về hoạt động";
+                                                                }
+                                                            } else {
+                                                                echo "Không có dữ liệu sản phẩm";
+                                                            }
+                                                            ?>
+                                                            </td>
                                                     </tr>
                                                     <tr>
                                                         <td scope="row">Pin</td>
-                                                        <td><?php echo $productSingle['pin'] . ' cell' ?></td>
+                                                        <td><?php
+                                                            // Kiểm tra xem biến $productSingle đã tồn tại và không phải là null
+                                                            if(isset($productSingle) && is_array($productSingle)) {
+                                                                // Kiểm tra xem phần tử 'pin' có tồn tại trong mảng $productSingle không
+                                                                if(array_key_exists('pin', $productSingle)) {
+                                                                    echo $productSingle['pin'] . ' cell';
+                                                                } else {
+                                                                    echo "Không có thông tin về pin";
+                                                                }
+                                                            } else {
+                                                                echo "Không có dữ liệu sản phẩm";
+                                                            }
+                                                            ?>
+                                                            </td>
                                                     </tr>
                                                     <tr>
                                                         <td scope="row">Trọng lượng</td>
-                                                        <td><?php echo $productSingle['weight'] . ' kg' ?></td>
+                                                        <td><?php
+                                                         // Kiểm tra xem biến $productSingle đã tồn tại và không phải là null
+                                                         if(isset($productSingle) && is_array($productSingle)) {
+                                                             // Kiểm tra xem phần tử 'weight' có tồn tại trong mảng $productSingle không
+                                                             if(array_key_exists('weight', $productSingle)) {
+                                                                 echo $productSingle['weight'] . ' kg';
+                                                             } else {
+                                                                 echo "Không có thông tin về trọng lượng";
+                                                             }
+                                                         } else {
+                                                             echo "Không có dữ liệu sản phẩm";
+                                                         }
+                                                         
+                                                            ?>
+                                                            </td>
                                                     </tr>
                                                     <tr>
                                                         <td scope="row">Kích thước</td>
-                                                        <td><?php echo $productSingle['size'] . ' cm' ?></td>
+                                                        <td><?php
+                                                            // Kiểm tra xem biến $productSingle đã tồn tại và không phải là null
+                                                            if(isset($productSingle) && is_array($productSingle)) {
+                                                                // Kiểm tra xem phần tử 'size' có tồn tại trong mảng $productSingle không
+                                                                if(array_key_exists('size', $productSingle)) {
+                                                                    echo $productSingle['size'] . ' cm';
+                                                                } else {
+                                                                    echo "Không có thông tin về kích thước";
+                                                                }
+                                                            } else {
+                                                                echo "Không có dữ liệu sản phẩm";
+                                                            }
+                                                            ?>
+                                                            </td>
                                                     </tr>
                                                     <!-- <tr>
                                                         <td scope="row">Đã bán</td>
