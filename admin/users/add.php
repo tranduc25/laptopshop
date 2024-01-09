@@ -64,6 +64,12 @@ if (isset($_POST['username'])) {
                 </div>
             </div>
             <div class="form-group row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Re-enter Password</label>
+                <div class="col-sm-10">
+                    <input type="password" name="passwordR">
+                </div>
+            </div>
+            <div class="form-group row">
                 <label for="staticEmail" class="col-sm-2 col-form-label">Thành phố</label>
                 <div class="col-sm-10">
                     <input type="text" name="city">

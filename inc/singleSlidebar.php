@@ -24,7 +24,6 @@
                     <ins><?php $sellprice = $r['price'] * (100 - $r['discount']) / 100;
                             echo number_format($sellprice) . ' VND' ?></ins>
                     <del><?php if ($sellprice != $r['price']) echo number_format($r['price']) ?></del><br>
-                    <ins><?php echo  date("d/m/Y", strtotime($r['time_add'])); ?></ins>
                 </div>
             </div>
         <?php } ?>
@@ -54,7 +53,6 @@
                     <ins><?php $sellprice = $r['price'] * (100 - $r['discount']) / 100;
                             echo number_format($sellprice) . ' VND' ?></ins>
                     <del><?php if ($sellprice != $r['price']) echo number_format($r['price']) ?></del><br>
-                    <ins><?php echo  date("d/m/Y", strtotime($r['time_add'])); ?></ins>
 
                 </div>
             </div>
